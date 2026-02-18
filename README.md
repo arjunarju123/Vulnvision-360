@@ -83,8 +83,15 @@ Vulnerability Management roles.
   Day     Task                     Status
   ------- ------------------------ ------------
   Day 1   Project initialization   ✅ Started
-  Day 2   Lab environment setup    ⏳ Pending
-  Day 3   Network discovery        ⏳ Pending
+  Day 2   Lab environment setup    ✅ Started
+  Day 3   Network discovery and service enumeration completed using Nmap ✅ Started
+  Day 4
+  Day 5
+  Day 6
+  Day 7
+  Day 8
+  Day 9
+  Day 10
 
 ------------------------------------------------------------------------
 
