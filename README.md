@@ -1,126 +1,130 @@
 # VulnVision 360
 
-### Continuous Compliance & Threat Exposure Engine
+## Continuous Compliance & Threat Exposure Engine
 
-## 📌 Project Overview
+### Project Overview
 
-VulnVision 360 is a hands-on cybersecurity project designed to simulate
-a real-world vulnerability management lifecycle. The project focuses on
-asset discovery, vulnerability assessment, compliance validation, and
-remediation automation within a controlled lab environment.
+**VulnVision 360** is a cybersecurity project that demonstrates a continuous vulnerability management and compliance automation workflow. The project focuses on discovering network assets, identifying vulnerabilities, enforcing compliance standards, and validating remediation in a controlled lab environment.
 
-This project demonstrates practical skills required in SOC and
-Vulnerability Management roles.
+The objective is to simulate a real-world enterprise scenario where legacy systems remain unpatched, increasing the organization's attack surface.
 
-------------------------------------------------------------------------
+---
 
-## 🎯 Objectives
+# Tools & Technologies
 
--   Discover and map network assets
--   Perform vulnerability assessments
--   Conduct compliance checks using security benchmarks
--   Automate remediation actions
--   Generate executive security reports
--   Show risk reduction through remediation
+| Tool           | Purpose                                 |
+| -------------- | --------------------------------------- |
+| Nmap           | Network discovery and asset enumeration |
+| OpenVAS (GVM)  | Vulnerability scanning                  |
+| OpenSCAP       | Compliance auditing                     |
+| Bash / Ansible | Automated remediation                   |
+| Kali Linux     | Security testing platform               |
+| Ubuntu Server  | Target system                           |
 
-------------------------------------------------------------------------
+---
 
-## 🛠 Tools & Technologies
+# Lab Environment
 
--   Kali Linux
--   Nmap
--   OpenVAS / GVM
--   OpenSCAP
--   Ansible
--   Linux Servers
--   Bash scripting
--   VirtualBox / VMware
+| Machine       | Role                  | IP Address    |
+| ------------- | --------------------- | ------------- |
+| Kali Linux    | Vulnerability Scanner | 192.168.198.5 |
+| Ubuntu Server | Target System         | 192.168.198.3 |
 
-------------------------------------------------------------------------
+Network Range:
 
-## 📂 Project Structure
+192.168.198.0/24
 
-    VulnVision-360/
-    │
-    ├── scripts/      # Automation scripts
-    ├── configs/      # Compliance and configuration files
-    ├── reports/      # Scan and assessment reports
-    ├── docs/         # Documentation and progress logs
-    └── README.md
+---
 
-------------------------------------------------------------------------
+# Week 1 – Discovery & Setup
 
-## 🗺 Roadmap
+## Objective
 
-### Week 1 --- Discovery & Setup
+The goal of Week 1 is to identify all active hosts within the internal network and build a complete asset inventory.
 
--   Lab environment setup
--   Network asset discovery
--   Service and OS identification
+---
 
-### Week 2 --- Vulnerability Assessment
+## Network Discovery
 
--   Unauthenticated scans
--   Authenticated scans
--   Critical vulnerability analysis
+Network discovery was performed using **Nmap** to identify live hosts in the subnet.
 
-### Week 3 --- Compliance Automation
+Command used:
 
--   Compliance scanning
--   CIS benchmark validation
--   Compliance reporting
+```
+sudo nmap -sn 192.168.198.0/24
+```
 
-### Week 4 --- Remediation & Reporting
+This scan identifies all reachable systems within the internal network.
 
--   Automated patching
--   Configuration hardening
--   Final risk comparison report
+---
 
-------------------------------------------------------------------------
+## Service and Port Enumeration
 
-## 📈 Progress Tracker
+A detailed scan was performed on the discovered Ubuntu server to identify open ports and running services.
 
-  Day     Task                     Status
-  ------- ------------------------ ------------
-  Day 1   Project initialization   ✅ Started
-  Day 2   Lab environment setup    ✅ Started
-  Day 3   Network discovery and service enumeration completed using Nmap ✅ Started
-  Day 4
-  Day 5
-  Day 6
-  Day 7
-  Day 8
-  Day 9
-  Day 10
+Command used:
 
-------------------------------------------------------------------------
+```
+sudo nmap -A -T4 192.168.198.3
+```
 
-## 🔐 Skills Demonstrated
+This command enables:
 
--   Vulnerability assessment
--   Compliance auditing
--   Risk analysis
--   Automation scripting
--   Security reporting
--   Infrastructure lab setup
+* OS detection
+* Service version detection
+* Script scanning
+* Traceroute
 
-------------------------------------------------------------------------
+---
 
-## 📢 Future Improvements
+## Asset Inventory
 
--   Dashboard visualization
--   Automated reporting pipeline
--   Continuous scanning automation
+The following assets were identified during the network discovery phase.
 
-------------------------------------------------------------------------
+| Host          | IP Address    | Operating System | Open Ports    | Services              |
+| ------------- | ------------- | ---------------- | ------------- | --------------------- |
+| Kali Linux    | 192.168.198.5 | Linux            | 22            | SSH                   |
+| Ubuntu Server | 192.168.198.3 | Linux            | 21,22,80,3306 | FTP, SSH, HTTP, MySQL |
 
-## ⚠ Disclaimer
+---
 
-This project is performed in a controlled lab environment for
-educational and research purposes only.
+## Evidence
 
-------------------------------------------------------------------------
+Screenshots and scan outputs are stored in the repository:
 
-## 👨‍💻 Author
+```
+/scans
+/screenshots
+```
 
-Arjun A -- Cybersecurity Enthusiast
+Example files:
+
+* nmap_scan_results.txt
+* network_discovery.png
+
+---
+
+# Week 1 Gate Check
+
+The asset discovery phase successfully identified all active systems within the subnet.
+
+Deliverables:
+
+* Network discovery results
+* Asset inventory documentation
+* OpenVAS vulnerability scanner installed and ready
+
+This completes **Week 1 – Discovery & Setup**.
+
+---
+
+# Next Phase
+
+Week 2 will focus on **vulnerability assessment** using OpenVAS.
+
+Tasks include:
+
+* Running unauthenticated vulnerability scans
+* Running authenticated scans using SSH credentials
+* Identifying critical vulnerabilities (CVSS ≥ 9)
+* Researching remediation steps
