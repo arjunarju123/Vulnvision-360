@@ -27,7 +27,7 @@ The objective is to simulate a real-world enterprise scenario where legacy syste
 
 | Machine       | Role                  | IP Address    |
 | ------------- | --------------------- | ------------- |
-| Kali Linux    | Vulnerability Scanner | 192.168.198.5 |
+| Kali Linux    | Vulnerability Scanner | 192.168.198.4 |
 | Ubuntu Server | Target System         | 192.168.198.3 |
 
 Network Range:
