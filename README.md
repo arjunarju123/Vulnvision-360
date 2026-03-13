@@ -112,7 +112,7 @@ https://127.0.0.1:9392
 
 The dashboard confirms that the vulnerability scanner is properly installed and operational.
 
-![](screenshots/openvas_in.png)
+![](screenshots/openvas_dash.png)
 
 ---
 
@@ -142,6 +142,3 @@ This confirms **complete visibility of the attack surface in the lab environment
 
 ---
 
-
-
-,
