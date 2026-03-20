@@ -8,14 +8,9 @@
 
 **VulnVision 360** is a cybersecurity lab project that simulates a real-world vulnerability management and compliance monitoring system.
 
-The project demonstrates how organizations can:
+The project demonstrates how organizations can continuously monitor their infrastructure, identify vulnerabilities, enforce security compliance, and remediate risks.
 
-* Discover network assets
-* Identify vulnerabilities
-* Analyze risk exposure
-* Improve security posture
-
-The lab environment represents an enterprise scenario where systems may be misconfigured or unpatched, increasing the attack surface.
+The environment simulates an enterprise scenario where legacy systems remain unpatched, increasing the organization's attack surface.
 
 ---
 
@@ -48,6 +43,10 @@ Network Range: 192.168.198.0/24
 
 ---
 
+Network Range:
+
+192.168.198.0/24
+
 # Week 1 – Discovery & Setup
 
 ## Objective
@@ -58,42 +57,66 @@ To identify all active systems within the network and build a complete asset inv
 
 ## Network Discovery (Nmap)
 
+Network discovery was performed using Nmap to identify all live hosts within the internal network.
+
+Command used:
+
 ```bash
 sudo nmap -sn 192.168.198.0/24
+
 ```
+### Result
 
-<p align="center">
-<img src="screenshots/network_discovery.png" width="800">
-</p>
+The scan successfully discovered the target Ubuntu machine and the Kali scanning system.
 
----
+![](screenshots/active_host.png)
+
 
 ## Service & Port Enumeration
+
+After identifying live hosts, a deeper aggrassive scan was performed to determine open ports, running services, and OS information.
+
+Command used:
 
 ```bash
 sudo nmap -A -T4 192.168.198.3
 ```
 
-<p align="center">
-<img src="screenshots/nmap_service_scan.png" width="800">
-</p>
+This scan enables:
+
+* OS detection
+* Service version detection
+* Script scanning
+* Traceroute
+
+### Result
+
+The scan revealed several open services including SSH (23) and HTTP(80) running on the target system.
+
+![](screenshots/port_enum.png)
 
 ---
 
-## OpenVAS Setup
+# OpenVAS Installation & Setup
+
+The vulnerability scanning platform **OpenVAS (Greenbone Vulnerability Manager)** was installed on Kali Linux.
+
+Commands used:
 
 ```bash
 sudo gvm-setup
 sudo gvm-start
 ```
 
-Accessed via:
+After installation, the web interface was accessed using:
 
+```
 https://127.0.0.1:9392
+```
 
-<p align="center">
-<img src="screenshots/openvas_dashboard.png" width="800">
-</p>
+The dashboard confirms that the vulnerability scanner is properly installed and operational.
+
+![](screenshots/openvas_dash.png)
 
 ---
 
@@ -120,9 +143,18 @@ https://127.0.0.1:9392
 
 ## Objective
 
-To identify and analyze vulnerabilities in the target system.
+To identify, analyze and prioritize vulnerabilities in the target system using OpenVAS. This phase simulates both external and internal attacker perspectives to evaluate the security posture of the environment.
 
----
+
+### Target Information
+
+Target Machine: Metasploitable 2
+
+IP Address: 192.168.198.7
+
+Scanner: OpenVAS (GVM)
+
+Scan Type: Full and Fast
 
 ## Scan Execution
 
@@ -181,25 +213,6 @@ Allows remote login without authentication.
 * Disable rlogin
 * Use SSH
 
----
-
-### rexec Service Running
-
-* **Severity:** Critical
-* **CVSS Score:** 10.0
-
-Allows remote command execution without encryption.
-
-**Impact:**
-
-* Full system compromise
-
-**Remediation:**
-
-* Disable rexec
-* Use secure protocols
-
----
 
 ## Vulnerability Details
 
