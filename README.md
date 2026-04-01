@@ -74,7 +74,7 @@ The scan successfully discovered the target Ubuntu machine and the Kali scanning
 
 ## Service & Port Enumeration
 
-After identifying live hosts, a deeper aggrassive scan was performed to determine open ports, running services, and OS information.
+After identifying live hosts, a deeper aggressive scan was performed to determine open ports, running services, and OS information.
 
 Command used:
 
@@ -91,7 +91,7 @@ This scan enables:
 
 ### Result
 
-The scan revealed several open services including SSH (23) and HTTP(80) running on the target system.
+The scan revealed several open services including SSH (22) and HTTP(80) running on the target system.
 
 ![](screenshots/port_enum.png)
 
@@ -344,7 +344,6 @@ Example output:
 
 ssg-ubuntu2204-ds.xml
 
-Screenshot:
 
 ![](screenshots/dataset_verify.png)
 
@@ -356,7 +355,6 @@ Screenshot:
 sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis_level1_server --results cis_results.xml --report cis_report.html /opt/content/build/ssg-ubuntu2204-ds.xml
 ```
 
-Screenshot:
 
 ![](screenshots/cis_scan_execution.png)
 
@@ -367,8 +365,6 @@ Screenshot:
 ``` bash
 firefox cis_report.html
 ```
-
-Screenshot:
 
 ![](screenshots/cis_report_output.png)
 
@@ -437,3 +433,397 @@ configuration weaknesses affecting system security posture. Applied
 initial remediation steps to improve compliance status.
 
 ------------------------------------------------------------------------
+
+# Week 4 – Remediation & Reporting
+## Automated Vulnerability Remediation using Bash Script and Ansible Playbook
+
+---
+
+# 🎯 Objective
+
+The objective of Week 4 was to remediate vulnerabilities identified during Week 2 enumeration and validate mitigation success through a Closed-Loop remediation process.
+
+This phase included:
+
+• Creating remediation.sh automation script  
+• Executing service hardening tasks  
+• Installing Ansible automation framework  
+• Creating remediation.yml playbook  
+• Running automated remediation tasks  
+• Performing verification scan using Nmap  
+
+This workflow demonstrates a real-world SOC Vulnerability Management Lifecycle:
+
+Detection → Remediation → Verification
+
+---
+
+# 🧪 Lab Environment
+
+| Component | Details |
+|----------|---------|
+Attacker Machine | Kali Linux
+Target Machine | Ubuntu Linux VM
+Automation Tools | Bash Script + Ansible
+Scanner Tool | Nmap Enumeration Scan
+Network Mode | Host-Only Adapter
+
+---
+
+# 🚨 Vulnerabilities Identified in Week 2
+
+Initial enumeration scan revealed:
+
+• Root SSH login allowed  
+• Empty password authentication allowed  
+• Firewall disabled  
+• System packages outdated  
+
+These issues increase the attack surface and allow attackers to:
+
+• brute-force root login  
+• exploit outdated packages  
+• perform unauthorized remote access  
+• escalate privileges
+
+Initial Risk Level:
+
+HIGH
+
+---
+
+## ⚙ Step 1 – Creating Bash Remediation Script
+
+Command used:
+```bash
+nano remediation.sh
+```
+Purpose:
+
+Create automation script to patch vulnerabilities quickly before infrastructure-level remediation using Ansible.
+
+---
+
+# 📜 remediation.sh Script
+
+```bash
+
+#!/bin/bash
+
+echo "[+] Updating packages..."
+sudo apt update -y
+
+echo "[+] Upgrading system..."
+sudo apt upgrade -y
+
+echo "[+] Installing security updates..."
+sudo apt install unattended-upgrades -y
+
+echo "[+] Enabling firewall..."
+sudo ufw --force enable
+
+echo "[+] Disabling root SSH login..."
+sudo sed -i 's/^PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+
+echo "[+] Disabling empty passwords..."
+sudo sed -i 's/^PermitEmptyPasswords yes/PermitEmptyPasswords no/' /etc/ssh/sshd_config
+
+echo "[+] Restarting SSH service..."
+sudo systemctl restart ssh
+
+echo "[+] Remediation Completed"
+
+```
+
+## 🔍 Explanation of remediation.sh Script
+
+Each command in the script performs security hardening.
+
+Updating packages
+
+Command:
+
+apt update
+
+Purpose:
+
+Refresh package repository indexes.
+
+Why important:
+
+Ensures latest vulnerability patches become available.
+
+Upgrading system packages
+
+Command:
+
+apt upgrade
+
+Purpose:
+
+Install latest security updates.
+
+Why important:
+
+Fixes known CVEs affecting outdated software.
+
+Installing unattended-upgrades
+
+Command:
+
+apt install unattended-upgrades
+
+Purpose:
+
+Enable automatic background security patch installation.
+
+Why important:
+
+Prevents future exposure from newly discovered vulnerabilities.
+
+Enabling firewall protection
+
+Command:
+
+ufw enable
+
+Purpose:
+
+Activates Linux firewall protection.
+
+Why important:
+
+Blocks unauthorized incoming traffic.
+
+Impact:
+
+Reduces exposed attack surface immediately.
+
+Disabling root SSH login
+
+Command:
+
+PermitRootLogin no
+
+Purpose:
+
+Prevent attackers logging in directly as root.
+
+Why important:
+
+Root login is a common brute-force attack target.
+
+Security Benefit:
+
+Forces attackers to compromise normal users first.
+
+Disabling empty password authentication
+
+Command:
+
+PermitEmptyPasswords no
+
+Purpose:
+
+Prevents login without passwords.
+
+Why important:
+
+Stops unauthorized authentication bypass attempts.
+
+Restarting SSH service
+
+Command:
+
+systemctl restart ssh
+
+Purpose:
+
+Apply SSH configuration changes.
+
+Without restart:
+
+Changes would not take effect.
+
+```bash
+sudo nano remediation.sh
+```
+
+![](screenshots/bash_script.png)
+
+
+Command executed:
+```bash
+chmod +x remediation.sh
+```
+
+
+
+```bash
+
+./remediation.sh
+
+```
+
+![](screenshots/bash_exe.png)
+
+## ⚙ Step 2 – Installing Ansible Automation Tool
+
+Command:
+```bash
+sudo apt install ansible -y
+```
+
+Purpose:
+
+Enable Infrastructure-as-Code remediation automation.
+
+Why important:
+
+Ensures scalable remediation across multiple systems.
+
+
+
+![](screenshots/ansible_inst.png)
+
+
+⚙ Step 3 – Creating Ansible Playbook
+
+```bash
+
+nano remediation.yml
+```
+
+![](screenshots/remed_xml.png)
+
+Purpose:
+
+Automate remediation tasks using configuration management.
+
+📜 remediation.yml Playbook
+
+```
+= name: Vulnerability Remediation
+ hosts: localhost
+ become: yes
+
+tasks:
+
+- name: Update packages
+  apt:
+    update_cache: yes
+
+- name: Upgrade system
+  apt:
+    upgrade: dist
+
+- name: Enable firewall
+  ufw:
+    state: enabled
+
+- name: Disable root SSH login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+
+- name: Disable empty passwords
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+
+- name: Restart SSH
+  service:
+    name: ssh
+    state: restarted
+    ```
+
+### 🔍 Explanation of remediation.yml Playbook
+
+This playbook repeats remediation steps using automation best practices.
+
+Difference from Bash script:
+
+Bash script = manual automation
+Ansible playbook = scalable infrastructure automation
+
+Updating packages
+
+Ensures repository indexes remain current.
+
+Upgrading system
+
+Installs patched versions of vulnerable packages.
+
+Enabling firewall
+
+Ensures persistent firewall protection.
+
+Disabling root SSH login
+
+Prevents privilege escalation attacks.
+
+Disabling empty password authentication
+
+Prevents authentication bypass vulnerabilities.
+
+Restarting SSH service
+
+Applies configuration securely.
+
+
+
+
+```bash
+ansible-playbook remediation.yml
+```
+
+![](screenshots/a_p_rem.png)
+
+### 🔍 Step 4 – Closed-Loop Verification Scan
+
+Verification command executed from Kali Linux:
+
+```bash
+nmap -A -T4 192.168.198.13
+```
+Purpose:
+
+Confirm remediation success.
+
+Result:
+
+Previously exposed weaknesses mitigated successfully.
+
+![](screenshots/new%20enum.png)
+
+
+📊 Risk Reduction Comparison (Gate Check Report)
+Metric	Week 1	Week 4
+Open Services	Multiple	Reduced
+Firewall Status	Disabled	Enabled
+Root SSH Access	Enabled	Disabled
+Empty Password Login	Enabled	Disabled
+System Updates	Outdated	Updated
+Risk Level	HIGH	LOW
+🔐 Security Improvements Achieved
+
+After remediation:
+
+✔ system fully patched
+✔ firewall enabled
+✔ root SSH login disabled
+✔ empty password login blocked
+✔ automatic updates enabled
+✔ attack surface reduced
+
+🧾 Executive Summary
+
+Week 4 successfully completed vulnerability remediation identified during earlier enumeration stages.
+
+Automation was implemented using both Bash scripting and Ansible configuration management techniques.
+
+Security hardening actions removed authentication weaknesses and ensured system patch compliance.
+
+Final enumeration scanning confirmed mitigation success and demonstrated completion of a Closed-Loop Vulnerability Management workflow aligned with real-world SOC security practices.
