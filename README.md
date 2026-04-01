@@ -30,11 +30,11 @@ The environment simulates an enterprise scenario where legacy systems remain unp
 
 # Lab Environment
 
-| Machine          | Role                             | IP Address    |
-| ---------------- | -------------------------------- | ------------- |
-| Kali Linux       | Vulnerability Scanner            | 192.168.198.4 |
-| Ubuntu Server    | Discovery Target                 | 192.168.198.3 |
-| Metasploitable 2 | Vulnerable Target (OpenVAS Scan) | 192.168.198.7 |
+| Machine          | Role                             | IP Address     |
+| ---------------- | -------------------------------- | -------------  |
+| Kali Linux       | Vulnerability Scanner            | 192.168.198.4  |
+| Ubuntu           | Discovery Target                 | 192.168.198.13 |
+| Metasploitable 2 | Vulnerable Target (OpenVAS Scan) | 192.168.198.7  |
 
 Network Range: 192.168.198.0/24
 
@@ -69,7 +69,7 @@ sudo nmap -sn 192.168.198.0/24
 
 The scan successfully discovered the target Ubuntu machine and the Kali scanning system.
 
-![](screenshots/active_host.png)
+![](screenshots/host_dis.png)
 
 
 ## Service & Port Enumeration
@@ -107,12 +107,17 @@ Commands used:
 sudo gvm-setup
 sudo gvm-start
 ```
+![](screenshots/gvm_start.png)
 
 After installation, the web interface was accessed using:
 
 ```
 https://127.0.0.1:9392
+
 ```
+
+![](screenshots/gvm_login.png)
+
 
 The dashboard confirms that the vulnerability scanner is properly installed and operational.
 
@@ -125,7 +130,7 @@ The dashboard confirms that the vulnerability scanner is properly installed and 
 | Host             | IP Address    | OS    | Open Ports       | Services                      |
 | ---------------- | ------------- | ----- | ---------------- | ----------------------------- |
 | Kali Linux       | 192.168.198.4 | Linux | 22               | SSH                           |
-| Ubuntu Server    | 192.168.198.3 | Linux | 22,80            | SSH, HTTP                     |
+| Ubuntu           | 192.168.198.13 | Linux | 22,80            | SSH, HTTP                     |
 | Metasploitable 2 | 192.168.198.7 | Linux | 21,22,23,80,3306 | FTP, SSH, Telnet, HTTP, MySQL |
 
 ---
@@ -160,9 +165,7 @@ Scan Type: Full and Fast
 
 A vulnerability scan was performed using OpenVAS against the **Metasploitable 2** system.
 
-<p align="center">
-<img src="screenshots/openvas_scan_running.png" width="800">
-</p>
+![](screenshots/openvas_scan.png)
 
 ---
 
@@ -170,9 +173,8 @@ A vulnerability scan was performed using OpenVAS against the **Metasploitable 2*
 
 The scan identified multiple vulnerabilities, including several **Critical (CVSS 10.0)** issues.
 
-<p align="center">
-<img src="screenshots/openvas_results.png" width="800">
-</p>
+
+![](screenshots/openvas_results.png)
 
 ---
 
@@ -216,9 +218,8 @@ Allows remote login without authentication.
 
 ## Vulnerability Details
 
-<p align="center">
-<img src="screenshots/openvas_cve_details.png" width="800">
-</p>
+
+![](screenshots/openvas_cve_details.png)
 
 ---
 
@@ -230,22 +231,209 @@ Allows remote login without authentication.
 
 ---
 
-# Project Progress
+## Conclusion
 
-Week 1 – Discovery & Setup ✔ Completed
-Week 2 – Vulnerability Assessment ✔ Completed
-Week 3 – Compliance Automation ⏳ In Progress
-Week 4 – Remediation & Reporting ⏳ Pending
+The vulnerability assessment revealed that the target system is highly insecure and susceptible to multiple critical attacks. Immediate remediation is required to reduce risk and improve security posture.
 
----
+This phase successfully demonstrates real-world vulnerability identification and analysis using OpenVAS.
 
-# Next Phase – Week 3
+# Week 3 – Compliance Monitoring using OpenSCAP
 
-The next stage focuses on compliance auditing using OpenSCAP and CIS Benchmarks.
+## Compliance Automation using CIS Benchmark (OpenSCAP)
 
-Planned tasks:
+------------------------------------------------------------------------
 
-* Perform compliance scan using CIS profiles
-* Identify configuration weaknesses
-* Generate structured HTML report
+# 🎯 Objective
 
+The objective of Week 3 was to perform automated CIS Benchmark
+compliance scanning on an Ubuntu Linux server using OpenSCAP.
+
+The system was evaluated against the CIS Server Level 1 profile, and a
+structured HTML compliance report was generated identifying security
+misconfigurations that violate recommended baseline controls.
+
+------------------------------------------------------------------------
+
+# 🧰 Tools Used
+
+  Tool               Purpose
+  ------------------ -------------------------------
+  OpenSCAP           Compliance scanning engine
+  ComplianceAsCode   CIS benchmark dataset
+  Ubuntu VM          Target Linux server
+  Terminal           Command execution environment
+
+------------------------------------------------------------------------
+
+# 🖥️ Environment Details
+
+  Parameter       Value
+  --------------- -----------------------
+  Target System   Ubuntu Linux VM
+  Benchmark       CIS Server Level 1
+  Scanner         OpenSCAP
+  Output Format   HTML + XML
+  Scan Mode       Local compliance scan
+
+------------------------------------------------------------------------
+
+# ⚙️ Install OpenSCAP
+
+``` bash
+sudo apt install libopenscap8 python3-openscap -y
+```
+
+Verify installation:
+
+``` bash
+oscap -V
+```
+
+Screenshot:
+
+![](screenshots/oscap_version.png)
+
+------------------------------------------------------------------------
+
+# 📥 Download Compliance Dataset
+
+``` bash
+cd /opt
+sudo git clone https://github.com/ComplianceAsCode/content.git
+```
+
+
+------------------------------------------------------------------------
+
+# 🔧 Install Build Dependencies
+
+``` bash
+sudo apt install cmake make gcc -y
+```
+
+Screenshot:
+
+![](screenshots/build_dependencies.png)
+
+
+
+# 🏗️ Build SCAP Security Content
+
+``` bash
+cd /opt/content
+mkdir build
+cd build
+cmake ..
+make -j4
+```
+
+Screenshot:
+
+![](screenshots/scap_build.png)
+![](screenshots/scap_build.png)
+
+------------------------------------------------------------------------
+
+# 📊 Verify Dataset Availability
+
+``` bash
+ls /opt/content/build
+```
+
+Example output:
+
+ssg-ubuntu2204-ds.xml
+
+Screenshot:
+
+screenshots/dataset_verify.png
+
+------------------------------------------------------------------------
+
+# 🔍 Run CIS Server Level 1 Compliance Scan
+
+``` bash
+sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis_level1_server --results cis_results.xml --report cis_report.html /opt/content/build/ssg-ubuntu2204-ds.xml
+```
+
+Screenshot:
+
+screenshots/cis_scan_execution.png
+
+------------------------------------------------------------------------
+
+# 📑 Generate Structured HTML Compliance Report
+
+``` bash
+firefox cis_report.html
+```
+
+Screenshot:
+
+screenshots/cis_report_output.png
+
+------------------------------------------------------------------------
+
+# 🚨 Gate Check --- Identified CIS Configuration Failures
+
+Example non-compliant configurations detected:
+
+  -------------------------------------------------------------------------
+  Control            Issue Identified                       Risk
+  ------------------ -------------------------------------- ---------------
+  SSH Empty Password PermitEmptyPasswords enabled           Unauthorized
+  Login                                                     access risk
+
+  Weak Password      SHA-512 hashing not enforced           Password
+  Hashing                                                   cracking risk
+
+  Firewall Disabled  UFW inactive                           Increased
+                                                            attack surface
+
+  Password           Weak PAM configuration                 Brute-force
+  Complexity Missing                                        vulnerability
+
+  Audit Logging      auditd rules missing                   Poor incident
+  Incomplete                                                visibility
+
+  Unused Filesystems cramfs not disabled                    Kernel attack
+  Enabled                                                   vector exposure
+  -------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------
+
+# 📊 Compliance Scan Output Files
+
+  File              Description
+  ----------------- ------------------------------
+  cis_results.xml   Machine-readable scan output
+  cis_report.html   Structured compliance report
+
+------------------------------------------------------------------------
+
+# 📈 Skills Demonstrated
+
+This task demonstrates hands-on experience with:
+
+-   CIS Benchmark compliance validation
+-   Linux security auditing
+-   OpenSCAP automation workflow
+-   Security baseline verification
+-   Configuration hardening
+-   Compliance report generation
+
+------------------------------------------------------------------------
+
+# ✅ Outcome
+
+Successfully installed OpenSCAP and executed a CIS Server Level 1
+compliance scan against the Ubuntu test server.
+
+Generated a structured HTML compliance report and identified multiple
+configuration weaknesses affecting system security posture. Applied
+initial remediation steps to improve compliance status.
+
+------------------------------------------------------------------------

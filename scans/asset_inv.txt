@@ -1,0 +1,32 @@
+# Asset Inventory – Week 1
+
+Project: VulnVision360 – Continuous Compliance & Threat Exposure Engine
+
+Scanner Machine:
+Kali Linux
+IP Address: 192.168.198.4
+
+Target Machine:
+Ubuntu Desktop 24.04
+IP Address: 192.168.198.9
+
+Operating System Identified:
+Linux Kernel 4.15 – 5.19 (Detected via Nmap OS fingerprinting)
+
+Discovered Services:
+
+22/tcp → OpenSSH 9.6p1 Ubuntu
+80/tcp → Apache HTTP Server 2.4.58 (Ubuntu)
+
+Scan Commands Used:
+
+nmap -sn 192.168.198.0/24
+nmap -sS -sV 192.168.198.9
+nmap -O 192.168.198.9
+nmap -A -T4 -p- 192.168.198.9 -oN scans/VulnVision_fullscan.txt
+
+Discovery Summary:
+
+The internal subnet scan successfully identified the active Ubuntu target system. 
+Service enumeration confirmed SSH and Apache web server exposure. 
+Full port scanning verified no additional externally reachable services.

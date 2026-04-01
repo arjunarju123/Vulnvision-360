@@ -1,0 +1,26 @@
+# Nmap 7.98 scan initiated Sat Mar 28 11:45:24 2026 as: /usr/lib/nmap/nmap -A -T4 -p- -oN VulnVision_fullscan.txt 192.168.198.9
+Nmap scan report for 192.168.198.9
+Host is up (0.0020s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.15 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 b2:5e:60:5a:e2:c3:af:9a:e4:fd:6b:10:bb:84:ab:96 (ECDSA)
+|_  256 e0:18:35:9c:ba:01:c7:d4:3d:bc:7d:27:02:1a:f2:57 (ED25519)
+80/tcp open  http    Apache httpd 2.4.58 ((Ubuntu))
+|_http-title: Apache2 Ubuntu Default Page: It works
+|_http-server-header: Apache/2.4.58 (Ubuntu)
+MAC Address: 08:00:27:98:E4:5A (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:5
+OS details: Linux 4.15 - 5.19
+Network Distance: 1 hop
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   1.96 ms 192.168.198.9
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat Mar 28 11:46:19 2026 -- 1 IP address (1 host up) scanned in 54.98 seconds
