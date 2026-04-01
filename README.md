@@ -346,7 +346,7 @@ ssg-ubuntu2204-ds.xml
 
 Screenshot:
 
-screenshots/dataset_verify.png
+![](screenshots/dataset_verify.png)
 
 ------------------------------------------------------------------------
 
@@ -358,7 +358,7 @@ sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis_level1_
 
 Screenshot:
 
-screenshots/cis_scan_execution.png
+![](screenshots/cis_scan_execution.png)
 
 ------------------------------------------------------------------------
 
@@ -370,7 +370,7 @@ firefox cis_report.html
 
 Screenshot:
 
-screenshots/cis_report_output.png
+![](screenshots/cis_report_output.png)
 
 ------------------------------------------------------------------------
 
