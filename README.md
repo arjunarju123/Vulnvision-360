@@ -652,13 +652,15 @@ sudo nano remediation.sh
 ![](screenshots/bash_script.png)
 
 
-Command executed:
+Command executed
+
+GIven execute permission  for the file 
 
 ```bash
 chmod +x remediation.sh
 ```
 
-
+execute
 
 ```bash
 
