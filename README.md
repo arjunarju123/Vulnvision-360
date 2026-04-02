@@ -653,6 +653,7 @@ sudo nano remediation.sh
 
 
 Command executed:
+
 ```bash
 chmod +x remediation.sh
 ```
@@ -737,7 +738,8 @@ tasks:
   service:
     name: ssh
     state: restarted
-    ```
+
+```
 
 ### 🔍 Explanation of remediation.yml Playbook
 
@@ -799,7 +801,7 @@ Previously exposed weaknesses mitigated successfully.
 ![](screenshots/new%20enum.png)
 
 
-📊 Risk Reduction Comparison (Gate Check Report)
+### 📊 Risk Reduction Comparison (Gate Check Report)
 Metric	Week 1	Week 4
 Open Services	Multiple	Reduced
 Firewall Status	Disabled	Enabled
@@ -818,7 +820,7 @@ After remediation:
 ✔ automatic updates enabled
 ✔ attack surface reduced
 
-🧾 Executive Summary
+### 🧾 Executive Summary
 
 Week 4 successfully completed vulnerability remediation identified during earlier enumeration stages.
 
