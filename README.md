@@ -330,7 +330,7 @@ make -j4
 Screenshot:
 
 ![](screenshots/scap_build.png)
-![](screenshots/scap_build.png)
+![](screenshots/scap_build2.png)
 
 ------------------------------------------------------------------------
 
@@ -654,7 +654,7 @@ sudo nano remediation.sh
 
 Command executed
 
-GIven execute permission  for the file 
+Given execute permission  for the file 
 
 ```bash
 chmod +x remediation.sh
