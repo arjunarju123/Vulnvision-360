@@ -104,6 +104,7 @@ The vulnerability scanning platform **OpenVAS (Greenbone Vulnerability Manager)*
 Commands used:
 
 ```bash
+sudo apt install gvm -y
 sudo gvm-setup
 sudo gvm-start
 ```
