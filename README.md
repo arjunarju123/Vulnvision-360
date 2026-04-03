@@ -256,14 +256,14 @@ misconfigurations that violate recommended baseline controls.
 ------------------------------------------------------------------------
 
 # 🧰 Tools Used
-
-  Tool               Purpose
+Tool               Purpose
   ------------------ -------------------------------
   OpenSCAP           Compliance scanning engine
   ComplianceAsCode   CIS benchmark dataset
   Ubuntu VM          Target Linux server
   Terminal           Command execution environment
 
+  
 ------------------------------------------------------------------------
 
 # 🖥️ Environment Details
