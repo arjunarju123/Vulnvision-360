@@ -139,8 +139,11 @@ The dashboard confirms that the vulnerability scanner is properly installed and 
 ## Week 1 Gate Check
 
 ✔ Network discovery completed
+
 ✔ Service enumeration completed
+
 ✔ OpenVAS installed and configured
+
 ✔ Asset inventory created
 
 ---
