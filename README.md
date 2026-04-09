@@ -308,6 +308,8 @@ cd /opt
 sudo git clone https://github.com/ComplianceAsCode/content.git
 ```
 
+downloaded  compliance dataset using git
+
 
 ------------------------------------------------------------------------
 
@@ -364,7 +366,9 @@ sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis_level1_
 
 ![](screenshots/cis_scan_execution.png)
 
-------------------------------------------------------------------------
+
+After running the scan, I received report.html file
+
 
 # 📑 Generate Structured HTML Compliance Report
 
