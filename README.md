@@ -826,10 +826,15 @@ Risk Level	HIGH	LOW
 After remediation:
 
 ✔ system fully patched
+
 ✔ firewall enabled
+
 ✔ root SSH login disabled
+
 ✔ empty password login blocked
+
 ✔ automatic updates enabled
+
 ✔ attack surface reduced
 
 ### 🧾 Executive Summary
