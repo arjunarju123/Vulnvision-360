@@ -498,7 +498,7 @@ HIGH
 
 ---
 
-## ⚙ Step 1 – Creating Bash Remediation Script
+## ⚙ Creating Bash Remediation Script
 
 Command used:
 ```bash
@@ -676,7 +676,7 @@ execute
 
 ![](screenshots/bash_exe.png)
 
-## ⚙ Step 2 – Installing Ansible Automation Tool
+## ⚙ Installing Ansible Automation Tool
 
 Command:
 ```bash
@@ -696,7 +696,7 @@ Ensures scalable remediation across multiple systems.
 ![](screenshots/ansible_inst.png)
 
 
-⚙ Step 3 – Creating Ansible Playbook
+⚙ Creating Ansible Playbook
 
 ```bash
 
@@ -791,7 +791,7 @@ ansible-playbook remediation.yml
 
 ![](screenshots/a_p_rem.png)
 
-### 🔍 Step 4 – Closed-Loop Verification Scan
+### 🔍 Closed-Loop Verification Scan
 
 Verification command executed from Kali Linux:
 
