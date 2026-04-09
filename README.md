@@ -131,7 +131,7 @@ The dashboard confirms that the vulnerability scanner is properly installed and 
 | Host             | IP Address    | OS    | Open Ports       | Services                      |
 | ---------------- | ------------- | ----- | ---------------- | ----------------------------- |
 | Kali Linux       | 192.168.198.4 | Linux | 22               | SSH                           |
-| Ubuntu           | 192.168.198.13 | Linux | 22,80            | SSH, HTTP                     |
+| Ubuntu           | 192.168.198.13 | Linux |21,22,80            |FTP, SSH, HTTP               |
 | Metasploitable 2 | 192.168.198.7 | Linux | 21,22,23,80,3306 | FTP, SSH, Telnet, HTTP, MySQL |
 
 ---
@@ -415,8 +415,8 @@ Example non-compliant configurations detected:
 
   File              Description
   ----------------- ------------------------------
-  cis_results.xml   Machine-readable scan output
-  cis_report.html   Structured compliance report
+  results.xml   Machine-readable scan output
+  report.html   Structured compliance report
 
 ------------------------------------------------------------------------
 
@@ -808,7 +808,7 @@ Confirm remediation success.
 
 Result:
 
-Previously exposed weaknesses mitigated successfully.
+Previously exposed weaknesses were mitigated successfully.
 
 ![](screenshots/new%20enum.png)
 
