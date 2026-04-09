@@ -230,7 +230,9 @@ Allows remote login without authentication.
 ## Week 2 Gate Check
 
 ✔ Identified Critical vulnerabilities (CVSS ≥ 9.0)
+
 ✔ Analyzed vulnerability impact
+
 ✔ Documented remediation steps
 
 ---
